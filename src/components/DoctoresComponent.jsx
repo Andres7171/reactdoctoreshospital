@@ -1,0 +1,65 @@
+import React, { Component } from "react";
+import axios from "axios";
+import Global from "../Global";
+import DetallesDoctor from "./DetallesDoctor";
+export default class DoctoresComponent extends Component {
+  url = Global.urlDoctores;
+  state = {
+    doctores: [],
+    
+  };
+  loadDoctoresHospital = () => {
+    let request = "/api/Doctores/DoctoresHospital/" + this.props.idhospital;
+    axios.get(this.url + request).then((response) => {
+      this.setState({
+        doctores: response.data,
+      });
+    });
+  };
+  componentDidUpdate = (oldProps) => {
+    if (oldProps.idhospital != this.props.idhospital) {
+      this.loadDoctoresHospital();
+    }
+  };
+  componentDidMount = () => {
+    this.loadDoctoresHospital();
+  };
+  mandarDetalle=(idDoctor)=>{
+    return(<DetallesDoctor iddoctor={idDoctor}/>)
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Doctores del hospital {this.props.idhospital}</h1>
+
+        <table className="table table-primary table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Apellido</th>
+              <th>Especialidad</th>
+              <th>Salario</th>
+              <th>Hospital</th>
+              <th>Boton</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.doctores.map((doctor, index) => {
+              return (
+                <tr key={index}>
+                  <td>{doctor.apellido}</td>
+                  <td>{doctor.especialidad}</td>
+                  <td>{doctor.salario}</td>
+                  <td>{doctor.idHospital}</td>
+                  <td><button onClick={()=>{
+                    this.mandarDetalle(doctor.idDoctor)
+                  }}>Detalle</button></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+}
