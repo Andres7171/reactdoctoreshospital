@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import HomeComponent from "./HomeComponent";
 import MenuComponent from "./MenuComponent";
 import DoctoresComponent from "./DoctoresComponent";
+import CreateHospital from "./CreateHospital";
+import HospitalesComponent from "./HospitalesComponent";
+import EjemplosServiceComponent from "./EjemplosServiceComponent";
 
 export default class Router extends Component {
   render() {
@@ -18,6 +21,10 @@ export default class Router extends Component {
         <Routes>
           <Route path="/" element={<HomeComponent />} />
           <Route path="/doctores/:idhospital" element={<DoctoresElement/>}/>
+          <Route path="/createhospital" element={<CreateHospital/>}/>
+          <Route path="/hospitales" element={<HospitalesComponent/>}/>
+          <Route path="/ejemplos" element={<EjemplosServiceComponent/>}/>
+
         </Routes>
       </BrowserRouter>
     );

@@ -1,19 +1,18 @@
 import React, { Component } from "react";
-import axios from "axios";
-import Global from "../Global";
 import DetallesDoctor from "./DetallesDoctor";
+import ServiceHospitales from "../services/ServiceHospitales";
 export default class DoctoresComponent extends Component {
-  url = Global.urlDoctores;
+  
+  service = new ServiceHospitales();
+
   state = {
     doctores: [],
-    idDoctorSeleccionado:null,
-    
+    idDoctorSeleccionado: null,
   };
   loadDoctoresHospital = () => {
-    let request = "/api/Doctores/DoctoresHospital/" + this.props.idhospital;
-    axios.get(this.url + request).then((response) => {
+    this.service.getDoctoresHospital(this.props.idhospital).then((result) => {
       this.setState({
-        doctores: response.data,
+        doctores: result,
       });
     });
   };
@@ -21,18 +20,18 @@ export default class DoctoresComponent extends Component {
     if (oldProps.idhospital != this.props.idhospital) {
       this.loadDoctoresHospital();
       this.setState({
-        idDoctorSeleccionado:null
-      })
+        idDoctorSeleccionado: null,
+      });
     }
   };
   componentDidMount = () => {
     this.loadDoctoresHospital();
   };
-  mandarDetalle=(idDoctor)=>{
+  mandarDetalle = (idDoctor) => {
     this.setState({
-      idDoctorSeleccionado:idDoctor
-    })
-  }
+      idDoctorSeleccionado: idDoctor,
+    });
+  };
 
   render() {
     return (
@@ -48,7 +47,7 @@ export default class DoctoresComponent extends Component {
               <th>Hospital</th>
               <th>Boton</th>
             </tr>
-          </thead>  
+          </thead>
           <tbody>
             {this.state.doctores.map((doctor, index) => {
               return (
@@ -57,19 +56,24 @@ export default class DoctoresComponent extends Component {
                   <td>{doctor.especialidad}</td>
                   <td>{doctor.salario}</td>
                   <td>{doctor.idHospital}</td>
-                  <td><button className="btn btn-light" onClick={()=>{
-                    this.mandarDetalle(doctor.idDoctor)
-                  }}>Detalle</button></td>
+                  <td>
+                    <button
+                      className="btn btn-light"
+                      onClick={() => {
+                        this.mandarDetalle(doctor.idDoctor);
+                      }}
+                    >
+                      Detalle
+                    </button>
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
-        {
-          this.state.idDoctorSeleccionado !==null &&(
-            <DetallesDoctor idDoctor={this.state.idDoctorSeleccionado}/>
-          )
-        }
+        {this.state.idDoctorSeleccionado !== null && (
+          <DetallesDoctor idDoctor={this.state.idDoctorSeleccionado} />
+        )}
       </div>
     );
   }
