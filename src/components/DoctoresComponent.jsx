@@ -20,6 +20,9 @@ export default class DoctoresComponent extends Component {
   componentDidUpdate = (oldProps) => {
     if (oldProps.idhospital != this.props.idhospital) {
       this.loadDoctoresHospital();
+      this.setState({
+        idDoctorSeleccionado:null
+      })
     }
   };
   componentDidMount = () => {
@@ -54,7 +57,7 @@ export default class DoctoresComponent extends Component {
                   <td>{doctor.especialidad}</td>
                   <td>{doctor.salario}</td>
                   <td>{doctor.idHospital}</td>
-                  <td><button onClick={()=>{
+                  <td><button className="btn btn-light" onClick={()=>{
                     this.mandarDetalle(doctor.idDoctor)
                   }}>Detalle</button></td>
                 </tr>

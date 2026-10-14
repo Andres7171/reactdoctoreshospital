@@ -26,13 +26,13 @@ export default class DetallesDoctor extends Component {
   render() {
     return (
       <div>
-        <h1>DetallesDoctor</h1>
-        <ul>
-          <li>{this.state.detalles.idDoctor}</li>
-          <li>{this.state.detalles.apellido}</li>
-          <li>{this.state.detalles.especialidad}</li>
-          <li>{this.state.detalles.salario}</li>
-          <li>{this.state.detalles.idHospital}</li>
+        <h1>Detalles Doctor {this.state.detalles.apellido}</h1>
+        <ul className="list-group">
+          <li className="list-group-item"><strong>ID: </strong>{this.state.detalles.idDoctor}</li>
+          <li className="list-group-item"><strong>Apellido: </strong>{this.state.detalles.apellido}</li>
+          <li className="list-group-item"><strong>Especialidad: </strong>{this.state.detalles.especialidad}</li>
+          <li className="list-group-item"><strong>Salario: </strong>{this.state.detalles.salario}</li>
+          <li className="list-group-item"><strong>ID Hospital: </strong>{this.state.detalles.idHospital}</li>
         </ul>
       </div>
     );
