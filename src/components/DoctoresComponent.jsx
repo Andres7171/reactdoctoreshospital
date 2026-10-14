@@ -6,6 +6,7 @@ export default class DoctoresComponent extends Component {
   url = Global.urlDoctores;
   state = {
     doctores: [],
+    idDoctorSeleccionado:null,
     
   };
   loadDoctoresHospital = () => {
@@ -25,7 +26,9 @@ export default class DoctoresComponent extends Component {
     this.loadDoctoresHospital();
   };
   mandarDetalle=(idDoctor)=>{
-    return(<DetallesDoctor iddoctor={idDoctor}/>)
+    this.setState({
+      idDoctorSeleccionado:idDoctor
+    })
   }
 
   render() {
@@ -42,7 +45,7 @@ export default class DoctoresComponent extends Component {
               <th>Hospital</th>
               <th>Boton</th>
             </tr>
-          </thead>
+          </thead>  
           <tbody>
             {this.state.doctores.map((doctor, index) => {
               return (
@@ -59,6 +62,11 @@ export default class DoctoresComponent extends Component {
             })}
           </tbody>
         </table>
+        {
+          this.state.idDoctorSeleccionado !==null &&(
+            <DetallesDoctor idDoctor={this.state.idDoctorSeleccionado}/>
+          )
+        }
       </div>
     );
   }
